@@ -12,7 +12,7 @@ using fitness_app_backend.Db;
 namespace backend_daw.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240113144401_PostCommentLike")]
+    [Migration("20240113185511_PostCommentLike")]
     partial class PostCommentLike
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,9 +39,6 @@ namespace backend_daw.Migrations
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -59,9 +56,6 @@ namespace backend_daw.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("PostId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Id")
                         .HasColumnType("int");
 
                     b.Property<string>("UserName")

@@ -4,7 +4,6 @@ namespace backend_daw.Entities
 {
     public class Feedback
     {
-        public int Id { get; set; }
         public string UserName { get; set; }
         public bool Value { get; set; }
         public int PostId { get; set; }

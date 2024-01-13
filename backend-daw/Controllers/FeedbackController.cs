@@ -1,31 +1,64 @@
 ﻿using backend_daw.DTOs;
+using backend_daw.Entities;
 using backend_daw.Extensions;
 using backend_daw.Services;
+using fitness_app_backend.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
 namespace backend_daw.Controllers
 {
-    public class PostController : ControllerBase
+    public class FeedbackController : ControllerBase
     {
+        private readonly IFeedbackService _feedbackService;
         private readonly IPostService _postService;
         private readonly IUserService _userService;
 
-        public PostController(IPostService postService, IUserService userService)
+        public FeedbackController(IFeedbackService feedbackService, IPostService postService, IUserService userService)
         {
+            _feedbackService = feedbackService;
             _postService = postService;
             _userService = userService;
         }
 
         [HttpPost]
         [Authorize]
-        [Route("createPost")]
+        [Route("create")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResultDto<string>))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResultDto<string>))]
-        public async Task<IActionResult> CreatePost([FromBody] CreatePostRequest request)
+        public async Task<IActionResult> CreateFeedback([FromBody] CreateFeedbackRequest request)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userName = User.FindFirstValue(ClaimTypes.Name);
+
+            if (string.IsNullOrEmpty(userId))
+            {
+                return BadRequest("Unable to retrieve user information from claims.");
+            }
+
+            var result = await _feedbackService.CreateFeedback(userId, userName, request.PostId, request.Value);
+
+            var resultDto = result.ToResultDto();
+
+            if (!resultDto.IsSuccess)
+            {
+                return BadRequest(resultDto);
+            }
+
+            return Ok(resultDto);
+        }
+
+        [HttpPost]
+        [Authorize]
+        [Route("delete")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResultDto<string>))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResultDto<string>))]
+        public async Task<IActionResult> DeleteFeedback([FromBody] DeleteFeedbackRequest request)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -34,49 +67,7 @@ namespace backend_daw.Controllers
                 return BadRequest("Unable to retrieve user information from claims.");
             }
 
-            var result = await _postService.CreatePost(userId, request.Content, request.Image);
-
-            var resultDto = result.ToResultDto();
-
-            if (!resultDto.IsSuccess)
-            {
-                return BadRequest(resultDto);
-            }
-
-            return Ok(resultDto);
-        }
-
-        [HttpPost]
-        [Authorize]
-        [Route("updatePost")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResultDto<string>))]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResultDto<string>))]
-        public async Task<IActionResult> UpdatePost([FromBody] UpdatePostRequest request)
-        {
-            var result = await _postService.UpdatePost(request.PostId, request.Content, request.Image);
-
-            var resultDto = result.ToResultDto();
-
-            if (!resultDto.IsSuccess)
-            {
-                return BadRequest(resultDto);
-            }
-
-            return Ok(resultDto);
-        }
-
-        [HttpPost]
-        [Authorize]
-        [Route("deletePost")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResultDto<string>))]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResultDto<string>))]
-        public async Task<IActionResult> DeletePost([FromBody] DeletePostRequest request)
-        {
-            var result = await _postService.DeletePost(request.PostId);
+            var result = await _feedbackService.DeleteFeedback(userId, request.PostId);
 
             var resultDto = result.ToResultDto();
 
@@ -90,14 +81,14 @@ namespace backend_daw.Controllers
 
         [HttpGet]
         [Authorize]
-        [Route("getAllPosts")]
+        [Route("getAll")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResultDto<string>))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResultDto<string>))]
         public async Task<IActionResult> GetPosts()
         {
-            var result = await _postService.GetPosts();
+            var result = await _feedbackService.GetFeedbacks();
 
             var resultDto = result.ToResultDto();
 
@@ -108,6 +99,5 @@ namespace backend_daw.Controllers
 
             return Ok(resultDto);
         }
-    
     }
 }

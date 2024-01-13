@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/backend-daw/Services/IFeedbackService.cs
+/backend-daw/Services/FeedbackService.cs
+/backend-daw/Migrations/20240113165358_PostCommentLike.cs
