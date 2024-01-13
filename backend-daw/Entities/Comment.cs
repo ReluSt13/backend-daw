@@ -1,4 +1,5 @@
 ﻿using fitness_app_backend.Entities;
+using Newtonsoft.Json;
 
 namespace backend_daw.Entities
 {
@@ -10,6 +11,7 @@ namespace backend_daw.Entities
         public string UserName { get; set; }
         public int PostId { get; set; }
         public User User { get; set; }
+        [JsonIgnore]
         public Post Post { get; set; }
     }
 }

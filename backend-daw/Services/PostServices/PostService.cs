@@ -68,7 +68,11 @@ namespace backend_daw.Services.PostServices
         {
             try 
             {
-                var allPosts = _dbContext.Posts.Include(p => p.User).ToList();
+                var allPosts = _dbContext.Posts
+                    .Include(p => p.User)
+                    .Include(p => p.Feedbacks)
+                    .Include(p => p.Comments)
+                    .ToList();
 
                 if (allPosts == null || !allPosts.Any())
                 {

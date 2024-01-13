@@ -9,7 +9,9 @@ namespace fitness_app_backend.Entities
         public string? Avatar { get; set; }
         [JsonIgnore]
         public ICollection<Post>? Posts { get; set; }
+        [JsonIgnore]
         public ICollection<Feedback>? Feedbacks { get; set; }
+        [JsonIgnore]
         public ICollection<Comment>? Comments { get; set; }
     }
 }
