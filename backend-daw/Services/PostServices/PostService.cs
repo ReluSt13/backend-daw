@@ -1,6 +1,7 @@
 ﻿using backend_daw.Entities;
 using fitness_app_backend.Db;
 using FluentResults;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace backend_daw.Services.PostServices
@@ -67,7 +68,7 @@ namespace backend_daw.Services.PostServices
         {
             try
             {
-                var allPosts = _dbContext.Posts.ToList();
+                var allPosts = _dbContext.Posts.Include(p => p.User).ToList();
 
                 if (allPosts == null || !allPosts.Any())
                 {
