@@ -1,38 +1,36 @@
-﻿using backend_daw.DTOs.Feedback;
+﻿using backend_daw.DTOs.Comment;
 using backend_daw.DTOs.Util;
-using backend_daw.Entities;
 using backend_daw.Extensions;
-using fitness_app_backend.Entities;
+using backend_daw.Services.CommentServices;
+using backend_daw.Services.PostServices;
+using backend_daw.Services.UserServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using backend_daw.Services.FeedbackServices;
-using backend_daw.Services.PostServices;
-using backend_daw.Services.UserServices;
 
 namespace backend_daw.Controllers
 {
-    public class FeedbackController : ControllerBase
+    public class CommentController : ControllerBase
     {
-        private readonly IFeedbackService _feedbackService;
+        private readonly ICommentService _commentService;
         private readonly IPostService _postService;
         private readonly IUserService _userService;
 
-        public FeedbackController(IFeedbackService feedbackService, IPostService postService, IUserService userService)
+        public CommentController(ICommentService commentService, IPostService postService, IUserService userService)
         {
-            _feedbackService = feedbackService;
+            _commentService = commentService;
             _postService = postService;
             _userService = userService;
         }
 
         [HttpPost]
         [Authorize]
-        [Route("createFeedback")]
+        [Route("createComment")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResultDto<string>))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResultDto<string>))]
-        public async Task<IActionResult> CreateFeedback([FromBody] CreateFeedbackRequest request)
+        public async Task<IActionResult> CreateComment([FromBody] CreateCommentRequest request)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var userName = User.FindFirstValue(ClaimTypes.Name);
@@ -42,7 +40,7 @@ namespace backend_daw.Controllers
                 return BadRequest("Unable to retrieve user information from claims.");
             }
 
-            var result = await _feedbackService.CreateFeedback(userId, userName, request.PostId, request.Value);
+            var result = await _commentService.CreateComment(userId, request.Content, userName, request.PostId);
 
             var resultDto = result.ToResultDto();
 
@@ -56,12 +54,12 @@ namespace backend_daw.Controllers
 
         [HttpPost]
         [Authorize]
-        [Route("deleteFeedback")]
+        [Route("deleteComment")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResultDto<string>))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResultDto<string>))]
-        public async Task<IActionResult> DeleteFeedback([FromBody] DeleteFeedbackRequest request)
+        public async Task<IActionResult> DeleteComment([FromBody] DeleteCommentRequest request)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -70,7 +68,7 @@ namespace backend_daw.Controllers
                 return BadRequest("Unable to retrieve user information from claims.");
             }
 
-            var result = await _feedbackService.DeleteFeedback(userId, request.PostId);
+            var result = await _commentService.DeleteComment(request.PostId, userId);
 
             var resultDto = result.ToResultDto();
 
@@ -84,14 +82,14 @@ namespace backend_daw.Controllers
 
         [HttpGet]
         [Authorize]
-        [Route("getAllFeedbacks")]
+        [Route("getAllComments")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResultDto<string>))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResultDto<string>))]
         public async Task<IActionResult> GetPosts()
         {
-            var result = await _feedbackService.GetFeedbacks();
+            var result = await _commentService.GetComments();
 
             var resultDto = result.ToResultDto();
 

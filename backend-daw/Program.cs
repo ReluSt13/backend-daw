@@ -12,6 +12,7 @@ using backend_daw.Services.AuthenticationServices;
 using backend_daw.Services.FeedbackServices;
 using backend_daw.Services.PostServices;
 using backend_daw.Services.UserServices;
+using backend_daw.Services.CommentServices;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -58,6 +59,7 @@ builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<IFeedbackService, FeedbackService>();
+builder.Services.AddScoped<ICommentService, CommentService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
