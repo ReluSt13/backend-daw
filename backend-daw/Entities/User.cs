@@ -4,5 +4,6 @@ namespace fitness_app_backend.Entities
 {
     public class User : IdentityUser
     {
+        public string? Avatar { get; set; }
     }
 }

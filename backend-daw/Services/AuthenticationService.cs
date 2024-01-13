@@ -30,14 +30,20 @@ namespace backend_daw.Services
             }
 
             var authClaims = new List<Claim>
-        {
-            new(ClaimTypes.Name, user.UserName),
-            new(ClaimTypes.Email, user.Email),
-            new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-        };
-
+            {
+                new(ClaimTypes.NameIdentifier, user.Id),
+                new(ClaimTypes.Name, user.UserName),
+                new(ClaimTypes.Email, user.Email),
+                new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+            };
             var userRoles = await _userManager.GetRolesAsync(user);
             authClaims.AddRange(userRoles.Select(userRole => new Claim(ClaimTypes.Role, userRole)));
+            if (user.Avatar != null)
+            {
+                var avatarClaim = new Claim("Avatar", user.Avatar);
+                authClaims.Add(avatarClaim);
+            }
+
             var token = GetToken(authClaims);
 
             return Result.Ok(new JwtSecurityTokenHandler().WriteToken(token));
