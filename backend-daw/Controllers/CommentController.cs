@@ -1,4 +1,5 @@
 ﻿using backend_daw.DTOs.Comment;
+using backend_daw.DTOs.Post;
 using backend_daw.DTOs.Util;
 using backend_daw.Extensions;
 using backend_daw.Services.CommentServices;
@@ -52,7 +53,7 @@ namespace backend_daw.Controllers
             return Ok(resultDto);
         }
 
-        [HttpPost]
+        [HttpDelete]
         [Authorize]
         [Route("deleteComment")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResultDto<string>))]
@@ -82,14 +83,37 @@ namespace backend_daw.Controllers
 
         [HttpGet]
         [Authorize]
-        [Route("getAllComments")]
+        [Route("getAllComments/{postId}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResultDto<string>))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResultDto<string>))]
-        public async Task<IActionResult> GetPosts()
+        public async Task<IActionResult> GetComments(int postId)
         {
-            var result = await _commentService.GetComments();
+            var result = await _commentService.GetComments(postId);
+
+            var resultDto = result.ToResultDto();
+
+            if (!resultDto.IsSuccess)
+            {
+                return BadRequest(resultDto);
+            }
+
+            return Ok(resultDto);
+        }
+
+        [HttpPut]
+        [Authorize]
+        [Route("updateComment")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResultDto<string>))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResultDto<string>))]
+        public async Task<IActionResult> UpdateComment([FromBody] UpdateCommentRequest request)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var result = await _commentService.UpdateComment(userId, request.PostId, request.Content);
 
             var resultDto = result.ToResultDto();
 

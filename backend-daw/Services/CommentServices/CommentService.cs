@@ -1,6 +1,7 @@
 ﻿using backend_daw.Entities;
 using fitness_app_backend.Db;
 using FluentResults;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Xml.Linq;
@@ -65,11 +66,11 @@ namespace backend_daw.Services.CommentServices
             }
         }
 
-        public async Task<Result<string>> GetComments()
+        public async Task<Result<string>> GetComments(int postId)
         {
             try
             {
-                var allComments = _dbContext.Comments.ToList();
+                var allComments = _dbContext.Comments.Where(c => c.PostId == postId).Include(c => c.User).ToList();
 
                 if (allComments == null || !allComments.Any())
                 {
@@ -85,15 +86,15 @@ namespace backend_daw.Services.CommentServices
             }
         }
 
-        public async Task<Result<string>> UpdateComment(int postId, string content)
+        public async Task<Result<string>> UpdateComment(string userId, int postId, string content)
         {
             try
             {
-                var commentToUpdate = await _dbContext.Posts.FindAsync(postId);
+                var commentToUpdate = await _dbContext.Posts.FindAsync(userId, postId);
 
                 if (commentToUpdate == null)
                 {
-                    return Result.Fail<string>("Post not found.");
+                    return Result.Fail<string>("Comment not found.");
                 }
 
                 if (content != null)
@@ -107,7 +108,7 @@ namespace backend_daw.Services.CommentServices
             }
             catch (Exception ex)
             {
-                return Result.Fail<string>($"Failed to update the post: {ex.Message}");
+                return Result.Fail<string>($"Failed to update the comment: {ex.Message}");
             }
         }
     }

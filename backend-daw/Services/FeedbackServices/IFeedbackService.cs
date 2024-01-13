@@ -8,6 +8,6 @@ namespace backend_daw.Services.FeedbackServices
 
         Task<Result<string>> DeleteFeedback(string userId, int postId);
 
-        Task<Result<string>> GetFeedbacks();
+        Task<Result<string>> GetFeedbacks(int postId);
     }
 }

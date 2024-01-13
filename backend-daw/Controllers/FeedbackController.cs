@@ -54,7 +54,7 @@ namespace backend_daw.Controllers
             return Ok(resultDto);
         }
 
-        [HttpPost]
+        [HttpDelete]
         [Authorize]
         [Route("deleteFeedback")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResultDto<string>))]
@@ -84,14 +84,14 @@ namespace backend_daw.Controllers
 
         [HttpGet]
         [Authorize]
-        [Route("getAllFeedbacks")]
+        [Route("getAllFeedbacks/{postId}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResultDto<string>))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResultDto<string>))]
-        public async Task<IActionResult> GetPosts()
+        public async Task<IActionResult> GetPosts(int postId)
         {
-            var result = await _feedbackService.GetFeedbacks();
+            var result = await _feedbackService.GetFeedbacks(postId);
 
             var resultDto = result.ToResultDto();
 

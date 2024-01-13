@@ -48,7 +48,7 @@ namespace backend_daw.Controllers
             return Ok(resultDto);
         }
 
-        [HttpPost]
+        [HttpPut]
         [Authorize]
         [Route("updatePost")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResultDto<string>))]
@@ -69,7 +69,7 @@ namespace backend_daw.Controllers
             return Ok(resultDto);
         }
 
-        [HttpPost]
+        [HttpDelete]
         [Authorize]
         [Route("deletePost")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResultDto<string>))]

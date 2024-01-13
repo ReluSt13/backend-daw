@@ -66,7 +66,7 @@ namespace backend_daw.Services.PostServices
 
         public async Task<Result<string>> GetPosts()
         {
-            try
+            try 
             {
                 var allPosts = _dbContext.Posts.Include(p => p.User).ToList();
 

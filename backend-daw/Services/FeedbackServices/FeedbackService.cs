@@ -1,6 +1,7 @@
 ﻿using backend_daw.Entities;
 using fitness_app_backend.Db;
 using FluentResults;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace backend_daw.Services.FeedbackServices
@@ -63,11 +64,11 @@ namespace backend_daw.Services.FeedbackServices
             }
         }
 
-        public async Task<Result<string>> GetFeedbacks()
+        public async Task<Result<string>> GetFeedbacks(int postId)
         {
             try
             {
-                var allFeedbacks = _dbContext.Feedbacks.ToList();
+                var allFeedbacks = _dbContext.Feedbacks.Where(f => f.PostId == postId).Include(f => f.User).ToList();
 
                 if (allFeedbacks == null || !allFeedbacks.Any())
                 {
