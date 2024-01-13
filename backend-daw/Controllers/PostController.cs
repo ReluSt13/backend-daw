@@ -1,9 +1,11 @@
-﻿using backend_daw.DTOs;
+﻿using backend_daw.DTOs.Post;
+using backend_daw.DTOs.Util;
 using backend_daw.Extensions;
-using backend_daw.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using backend_daw.Services.PostServices;
+using backend_daw.Services.UserServices;
 
 namespace backend_daw.Controllers
 {

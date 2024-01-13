@@ -1,5 +1,5 @@
-﻿using backend_daw.Entities;
-using fitness_app_backend.DTOs;
+﻿using backend_daw.DTOs.Auth;
+using backend_daw.Entities;
 using fitness_app_backend.Entities;
 using FluentResults;
 using Microsoft.AspNetCore.Identity;
@@ -8,7 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace backend_daw.Services
+namespace backend_daw.Services.AuthenticationServices
 {
     public class AuthenticationService : IAuthenticationService
     {

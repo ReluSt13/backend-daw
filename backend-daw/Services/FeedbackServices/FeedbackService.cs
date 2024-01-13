@@ -3,9 +3,9 @@ using fitness_app_backend.Db;
 using FluentResults;
 using Newtonsoft.Json;
 
-namespace backend_daw.Services
+namespace backend_daw.Services.FeedbackServices
 {
-    public class FeedbackService: IFeedbackService
+    public class FeedbackService : IFeedbackService
     {
         private readonly AppDbContext _dbContext;
 

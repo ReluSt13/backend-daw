@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace backend_daw.DTOs
+namespace backend_daw.DTOs.Avatar
 {
     public class UpdateAvatarRequest
     {

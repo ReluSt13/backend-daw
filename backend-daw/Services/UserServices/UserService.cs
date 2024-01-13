@@ -1,7 +1,7 @@
 ﻿using fitness_app_backend.Db;
 using FluentResults;
 
-namespace backend_daw.Services
+namespace backend_daw.Services.UserServices
 {
     public class UserService : IUserService
     {

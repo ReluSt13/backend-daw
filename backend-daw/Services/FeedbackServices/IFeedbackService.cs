@@ -1,6 +1,6 @@
 ﻿using FluentResults;
 
-namespace backend_daw.Services
+namespace backend_daw.Services.FeedbackServices
 {
     public interface IFeedbackService
     {

@@ -1,7 +1,7 @@
 ﻿using backend_daw;
 using System.ComponentModel.DataAnnotations;
 
-namespace fitness_app_backend.DTOs
+namespace backend_daw.DTOs.Auth
 {
     public class RegisterRequest
     {

@@ -1,8 +1,8 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
-using fitness_app_backend.DTOs;
+using backend_daw.DTOs.Auth;
 using FluentResults;
 
-namespace backend_daw.Services
+namespace backend_daw.Services.AuthenticationServices
 {
     public interface IAuthenticationService
     {

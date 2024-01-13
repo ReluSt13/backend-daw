@@ -1,4 +1,4 @@
-﻿using backend_daw.DTOs;
+﻿using backend_daw.DTOs.Util;
 using FluentResults;
 
 namespace backend_daw.Extensions

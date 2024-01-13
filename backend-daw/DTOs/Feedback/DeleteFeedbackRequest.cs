@@ -1,4 +1,4 @@
-﻿namespace backend_daw.DTOs
+﻿namespace backend_daw.DTOs.Feedback
 {
     public class DeleteFeedbackRequest
     {

@@ -1,11 +1,14 @@
-﻿using backend_daw.DTOs;
+﻿using backend_daw.DTOs.Feedback;
+using backend_daw.DTOs.Util;
 using backend_daw.Entities;
 using backend_daw.Extensions;
-using backend_daw.Services;
 using fitness_app_backend.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using backend_daw.Services.FeedbackServices;
+using backend_daw.Services.PostServices;
+using backend_daw.Services.UserServices;
 
 namespace backend_daw.Controllers
 {

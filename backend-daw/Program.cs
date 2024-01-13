@@ -1,6 +1,5 @@
 using backend_daw.Db;
 using backend_daw.Entities;
-using backend_daw.Services;
 using fitness_app_backend.Db;
 using fitness_app_backend.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -9,6 +8,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using backend_daw.Services.AuthenticationServices;
+using backend_daw.Services.FeedbackServices;
+using backend_daw.Services.PostServices;
+using backend_daw.Services.UserServices;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;

@@ -1,7 +1,9 @@
-﻿using backend_daw.DTOs;
+﻿using backend_daw.DTOs.Auth;
+using backend_daw.DTOs.Avatar;
+using backend_daw.DTOs.Util;
 using backend_daw.Extensions;
-using backend_daw.Services;
-using fitness_app_backend.DTOs;
+using backend_daw.Services.AuthenticationServices;
+using backend_daw.Services.UserServices;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;

@@ -3,7 +3,7 @@ using fitness_app_backend.Db;
 using FluentResults;
 using Newtonsoft.Json;
 
-namespace backend_daw.Services
+namespace backend_daw.Services.PostServices
 {
     public class PostService : IPostService
     {
