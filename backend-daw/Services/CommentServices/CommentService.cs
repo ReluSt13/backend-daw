@@ -37,7 +37,7 @@ namespace backend_daw.Services.CommentServices
                 var createdComment = await _dbContext.Comments
                     .Include(c => c.User)
                     .Include(c => c.Post)
-                    .FirstOrDefaultAsync(c => c.UserId == userId && c.PostId == postId);
+                    .FirstOrDefaultAsync(c => c.Id == newComment.Id);
 
 
                 return Result.Ok(JsonConvert.SerializeObject(createdComment));
@@ -48,11 +48,11 @@ namespace backend_daw.Services.CommentServices
             }
         }
 
-        public async Task<Result<string>> DeleteComment(int postId, string userId)
+        public async Task<Result<string>> DeleteComment(int commentId)
         {
             try
             {
-                var commentToDelete = await _dbContext.Comments.FindAsync(userId, postId);
+                var commentToDelete = await _dbContext.Comments.FindAsync(commentId);
 
                 if (commentToDelete == null)
                 {
@@ -92,11 +92,11 @@ namespace backend_daw.Services.CommentServices
             }
         }
 
-        public async Task<Result<string>> UpdateComment(string userId, int postId, string content)
+        public async Task<Result<string>> UpdateComment(int commentId, string content)
         {
             try
             {
-                var commentToUpdate = await _dbContext.Comments.FindAsync(userId, postId);
+                var commentToUpdate = await _dbContext.Comments.FindAsync(commentId);
 
                 if (commentToUpdate == null)
                 {

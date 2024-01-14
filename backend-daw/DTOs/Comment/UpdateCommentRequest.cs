@@ -4,7 +4,7 @@ namespace backend_daw.DTOs.Comment
 {
     public class UpdateCommentRequest
     {
-        public int PostId { get; set; }
+        public int CommentId { get; set; }
 
         [Required]
         [MaxLength(Const.PostMaxLength, ErrorMessage = Const.PostLengthValidationError)]

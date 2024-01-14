@@ -24,9 +24,6 @@ namespace fitness_app_backend.Db
 
             // many-to-many comments
             modelBuilder.Entity<Comment>()
-                .HasKey(pl => new { pl.UserId, pl.PostId });
-
-            modelBuilder.Entity<Comment>()
                 .HasOne(c => c.User)
                 .WithMany(u => u.Comments)
                 .HasForeignKey(c => c.UserId)

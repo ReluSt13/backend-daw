@@ -62,14 +62,7 @@ namespace backend_daw.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResultDto<string>))]
         public async Task<IActionResult> DeleteComment([FromBody] DeleteCommentRequest request)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            if (string.IsNullOrEmpty(userId))
-            {
-                return BadRequest("Unable to retrieve user information from claims.");
-            }
-
-            var result = await _commentService.DeleteComment(request.PostId, userId);
+            var result = await _commentService.DeleteComment(request.CommentId);
 
             var resultDto = result.ToResultDto();
 
@@ -111,9 +104,7 @@ namespace backend_daw.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResultDto<string>))]
         public async Task<IActionResult> UpdateComment([FromBody] UpdateCommentRequest request)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            var result = await _commentService.UpdateComment(userId, request.PostId, request.Content);
+            var result = await _commentService.UpdateComment(request.CommentId, request.Content);
 
             var resultDto = result.ToResultDto();
 

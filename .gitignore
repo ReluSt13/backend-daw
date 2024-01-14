@@ -364,3 +364,5 @@ FodyWeavers.xsd
 /backend-daw/Services/IFeedbackService.cs
 /backend-daw/Services/FeedbackService.cs
 /backend-daw/Migrations/20240113165358_PostCommentLike.cs
+/backend-daw/Entities/Exercise.cs
+/backend-daw/Entities/Workout.cs
