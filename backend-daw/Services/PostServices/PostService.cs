@@ -31,7 +31,11 @@ namespace backend_daw.Services.PostServices
 
                 await _dbContext.SaveChangesAsync();
 
-                return Result.Ok(newPost.Id.ToString());
+                var createdPost = await _dbContext.Posts
+                    .Include(p => p.User)
+                    .FirstOrDefaultAsync(p => p.Id == newPost.Id);
+
+                return Result.Ok(JsonConvert.SerializeObject(createdPost));
             }
             catch (Exception ex)
             {
@@ -72,6 +76,7 @@ namespace backend_daw.Services.PostServices
                     .Include(p => p.User)
                     .Include(p => p.Feedbacks)
                     .Include(p => p.Comments)
+                    .OrderByDescending(p => p.DateAdded)
                     .ToList();
 
                 if (allPosts == null || !allPosts.Any())
