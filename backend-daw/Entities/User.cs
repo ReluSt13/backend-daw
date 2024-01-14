@@ -13,5 +13,8 @@ namespace fitness_app_backend.Entities
         public ICollection<Feedback>? Feedbacks { get; set; }
         [JsonIgnore]
         public ICollection<Comment>? Comments { get; set; }
+        [JsonIgnore]
+        public ICollection<Workout>? Workouts { get; set; }
     }
 }
+

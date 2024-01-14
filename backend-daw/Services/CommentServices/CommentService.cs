@@ -56,7 +56,7 @@ namespace backend_daw.Services.CommentServices
 
                 if (commentToDelete == null)
                 {
-                    return Result.Fail<string>("Feedback not found.");
+                    return Result.Fail<string>("Comment not found.");
                 }
 
                 _dbContext.Comments.Remove(commentToDelete);
