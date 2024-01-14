@@ -34,7 +34,13 @@ namespace backend_daw.Services.CommentServices
 
                 await _dbContext.SaveChangesAsync();
 
-                return Result.Ok();
+                var createdComment = await _dbContext.Comments
+                    .Include(c => c.User)
+                    .Include(c => c.Post)
+                    .FirstOrDefaultAsync(c => c.UserId == userId && c.PostId == postId);
+
+
+                return Result.Ok(JsonConvert.SerializeObject(createdComment));
             }
             catch (Exception ex)
             {
@@ -90,7 +96,7 @@ namespace backend_daw.Services.CommentServices
         {
             try
             {
-                var commentToUpdate = await _dbContext.Posts.FindAsync(userId, postId);
+                var commentToUpdate = await _dbContext.Comments.FindAsync(userId, postId);
 
                 if (commentToUpdate == null)
                 {
