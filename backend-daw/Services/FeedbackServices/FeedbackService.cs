@@ -31,15 +31,12 @@ namespace backend_daw.Services.FeedbackServices
 
                 await _dbContext.SaveChangesAsync();
 
-                /*var createdLike = await _dbContext.Feedbacks
+                var createdLike = await _dbContext.Feedbacks
                     .Include(c => c.User)
-                    .Include(c => c.Post)
                     .FirstOrDefaultAsync(c => c.UserId == userId && c.PostId == postId);
 
 
-                return Result.Ok(JsonConvert.SerializeObject(createdLike));*/
-
-                return Result.Ok();
+                return Result.Ok(JsonConvert.SerializeObject(createdLike));
             }
             catch (Exception ex)
             {
