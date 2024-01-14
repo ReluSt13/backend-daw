@@ -11,6 +11,10 @@ namespace fitness_app_backend.Db
         public DbSet<Post> Posts { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Feedback> Feedbacks { get; set; }
+        public DbSet<Workout> Workouts { get; set; }
+        public DbSet<Exercise> Exercises { get; set; } 
+        public DbSet<WorkoutExercise> WorkoutExercises { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -51,6 +55,25 @@ namespace fitness_app_backend.Db
                 .HasForeignKey(f => f.PostId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            // one-to-many
+            modelBuilder.Entity<Workout>()
+                .HasOne(p => p.User)
+                .WithMany(w => w.Workouts)
+                .HasForeignKey(p => p.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // many-to-many comments
+            modelBuilder.Entity<WorkoutExercise>()
+                .HasOne(we => we.Workout)
+                .WithMany(w => w.WorkoutExercises)
+                .HasForeignKey(we => we.WorkoutId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<WorkoutExercise>()
+                .HasOne(we => we.Exercise)
+                .WithMany(e => e.WorkoutExercises)
+                .HasForeignKey(we => we.ExerciseId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {

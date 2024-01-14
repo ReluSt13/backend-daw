@@ -13,6 +13,9 @@ using backend_daw.Services.FeedbackServices;
 using backend_daw.Services.PostServices;
 using backend_daw.Services.UserServices;
 using backend_daw.Services.CommentServices;
+using backend_daw.Services.ExerciseServices;
+using backend_daw.Services.WorkoutServices;
+using backend_daw.Services.WorkoutExerciseServices;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -60,6 +63,9 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<IFeedbackService, FeedbackService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
+builder.Services.AddScoped<IExerciseService, ExerciseService>();
+builder.Services.AddScoped<IWorkoutService, WorkoutService>();
+builder.Services.AddScoped<IWorkoutExerciseService, WorkoutExerciseService>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
