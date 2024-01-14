@@ -12,7 +12,7 @@ using fitness_app_backend.Db;
 namespace backend_daw.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240114154936_PostCommentLike")]
+    [Migration("20240114160857_PostCommentLike")]
     partial class PostCommentLike
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

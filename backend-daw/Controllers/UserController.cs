@@ -90,5 +90,26 @@ namespace backend_daw.Controllers
             return Ok(resultDto);
         }
 
+        [Authorize]
+        [HttpGet("verify")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResultDto<string>))]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ResultDto<string>))]
+        public async Task<IActionResult> Verify()
+        {
+            var userName = User.FindFirstValue(ClaimTypes.Name);
+
+            var result = await _authenticationService.Verify(new VerifyRequest { Username = userName });
+
+            var resultDto = result.ToResultDto();
+
+            if (!resultDto.IsSuccess)
+            {
+                return BadRequest(resultDto);
+            }
+            return Ok(resultDto);
+        }   
+
     }
 }

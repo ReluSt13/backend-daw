@@ -93,5 +93,20 @@ namespace backend_daw.Services.AuthenticationServices
         {
             return string.Join(", ", errors.Select(error => error.Description).ToArray());
         }
+
+        public async Task<Result<string>> Verify(VerifyRequest request)
+        {
+            try
+            {
+                var user = await _userManager.FindByNameAsync(request.Username) ?? await _userManager.FindByEmailAsync(request.Username);
+
+                await _userManager.AddToRoleAsync(user, Role.Verified);
+
+                return Result.Ok("User verified successfully.");
+            } catch (Exception ex)
+            {
+                return Result.Fail<string>($"Failed to verify user: {ex.Message}");
+            }   
+        }
     }
 }

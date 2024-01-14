@@ -21,6 +21,7 @@ namespace backend_daw.Db
 
             await roleManager.CreateAsync(new IdentityRole(Role.Admin));
             await roleManager.CreateAsync(new IdentityRole(Role.User));
+            await roleManager.CreateAsync(new IdentityRole(Role.Verified));
         }
 
         private static async Task SeedAdminUser(IServiceProvider services)
@@ -29,13 +30,14 @@ namespace backend_daw.Db
             var userManager = services.GetRequiredService<UserManager<User>>();
             var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
-            var adminUser = await context.Users.FirstOrDefaultAsync(user => user.UserName == "AuthenticationAdmin");
+            var adminUser = await context.Users.FirstOrDefaultAsync(user => user.UserName == "Admin");
 
             if (adminUser is null)
             {
-                adminUser = new User { UserName = "AuthenticationAdmin", Email = "your@email.com" };
-                await userManager.CreateAsync(adminUser, "VerySecretPassword!1");
+                adminUser = new User { UserName = "Admin", Email = "admin@email.com" };
+                await userManager.CreateAsync(adminUser, "String1!");
                 await userManager.AddToRoleAsync(adminUser, Role.Admin);
+                await userManager.AddToRoleAsync(adminUser, Role.Verified);
             }
         }
     }

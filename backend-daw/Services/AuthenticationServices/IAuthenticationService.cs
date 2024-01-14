@@ -8,5 +8,6 @@ namespace backend_daw.Services.AuthenticationServices
     {
         Task<Result<string>> Register(RegisterRequest request);
         Task<Result<string>> Login(LoginRequest request);
+        Task<Result<string>> Verify(VerifyRequest request);
     }
 }

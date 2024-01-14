@@ -31,8 +31,10 @@ builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("ElevatedRights", policy =>
         policy.RequireRole(Role.Admin));
+    options.AddPolicy("VerifiedRights", policy =>
+           policy.RequireRole(Role.Admin, Role.Verified));
     options.AddPolicy("StandardRights", policy =>
-        policy.RequireRole(Role.Admin, Role.User));
+        policy.RequireRole(Role.Admin, Role.User, Role.Verified));
 });
 
 builder.Services.AddAuthentication(options =>

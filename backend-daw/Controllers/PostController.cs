@@ -21,7 +21,7 @@ namespace backend_daw.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Policy = "VerifiedRights")]
         [Route("createPost")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ResultDto<string>))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
