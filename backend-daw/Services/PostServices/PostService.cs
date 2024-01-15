@@ -75,7 +75,9 @@ namespace backend_daw.Services.PostServices
                 var allPosts = _dbContext.Posts
                     .Include(p => p.User)
                     .Include(p => p.Feedbacks)
+                        .ThenInclude(f => f.User)
                     .Include(p => p.Comments)
+                        .ThenInclude(c => c.User)
                     .OrderByDescending(p => p.DateAdded)
                     .ToList();
 
