@@ -72,7 +72,7 @@ namespace backend_daw.Services.WorkoutServices
         {
             try
             {
-                var allWorkouts = _dbContext.Workouts.Where(w => w.UserId == userId).Include(c => c.User).ToList();
+                var allWorkouts = _dbContext.Workouts.Where(w => w.UserId == userId).Include(w => w.User).OrderByDescending(w => w.DateCreated).ToList();
 
                 if (allWorkouts == null || !allWorkouts.Any())
                 {
